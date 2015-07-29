@@ -1,0 +1,8 @@
+*config.py
+tmp
+lib
+include
+bin
+pip-selfcheck.json
+.Python
+.xml
