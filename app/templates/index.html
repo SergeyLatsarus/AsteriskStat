@@ -1,31 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-   table {
-    border-collapse: collapse; /* Отображать только одинарные линии */
-   }
-        table.t1  { margin-left:20px; }
-  table.t2  { margin-left:20px; }
-   th {
-    text-align: left; /* Выравнивание по левому краю */
-    background: #dfedf3; /* Цвет фона ячеек */
-    padding: 5px; /* Поля вокруг содержимого ячеек */
-    border: 1px solid black; /* Граница вокруг ячеек */
-   }
-   td {
-    padding: 5px; /* Поля вокруг содержимого ячеек */
-    border: 1px solid black; /* Граница вокруг ячеек */
-   }
-    </style>
+
       <title>Atserisk Stat</title>
       <meta charset="utf-8">
       <title>jQuery UI Datepicker - Default functionality</title>
       <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
       <script src="//code.jquery.com/jquery-1.10.2.js"></script>
       <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
       <link rel="stylesheet" href="/resources/demos/style.css">
 
+      <style>
+          table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, table>thead>tr>td, table>thead>tr>th {
+            vertical-align: middle !important;
+          }
+      </style>
       <script>
       $(function() {
         $( "#datepicker_from" ).datepicker();
@@ -34,27 +25,31 @@
         $( "#datepicker_to" ).datepicker();
       });
       </script>
-
   </head>
 
   <body>
+  <div class="container-fluid">
       {% block content %}
         <form action="" method="post" name="input_date_from">
           {{form.hidden_tag()}}
           <p>
+          <h4 class="text-primary">
           Please select date from:
           {{ form.input_date_from(size=10, id="datepicker_from")}} to:
-          {{ form.input_date_to(size=10, id="datepicker_to")}} <span style="margin-left:95%;"> <a href="/config">Config</a></span>
+          {{ form.input_date_to(size=10, id="datepicker_to")}} <span style="margin-left:95%;">
+            </span>
+            <!--<a href="/config">Config</a></span>-->
               <br>
+          </h4>
           </p>
-        <p><input type="submit" value="Get Report"></p>
+        <p><input type="submit" class="btn btn-info" value="Get Report"></p>
         </form>
       {% endblock %}
 
-      <table class="t1" width="98%" align=center height="55%" border="0" cellpadding="0" cellspacing="0">
-        <thead align=center>
-            <tr style="background: #dfedf3" height=40 align=center>
-              <th colspan="2" rowspan="2">Менеджер \ Часы </th>
+      <table class="table">
+        <thead>
+            <tr class="info">
+              <th colspan="2" align=center  rowspan="2">Менеджер \ Часы </th>
 
             {% for i in work_hours %}
               <th colspan="2" rowspan="2" align=center >{{i}}:00</th>
@@ -62,15 +57,15 @@
 
             </tr>
         </thead>
-        <tbody align=center border=solid 1px #326e87>
+        <tbody>
 
             {% for manager in managers %}
 
-            <tr>
-              <td colspan="2" rowspan="2" style="background: #dfedf3">{{ managers[manager].caller_name }} {{ managers[manager].caller_id }}</td>
+            <tr align=center >
+              <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ managers[manager].caller_name }} {{ managers[manager].caller_id }}</p></h5></td>
 
                 {% for i in work_hours %}
-                  <td rowspan="2" align=center class="row" id = "{{ managers[manager].caller_id }}aRow{{i}}" > {{managers[manager].details[i].duration}}</td>
+                  <td rowspan="2" align=center class="row v_align_center" id = "{{ managers[manager].caller_id }}aRow{{i}}" > {{managers[manager].details[i].duration}}</td>
                   <script>
                             if ({{ managers[manager].details[i].duration }} == 0) {
                               document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#ffffff";
@@ -88,7 +83,7 @@
                               document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#66CC33";
                             }
                   </script>
-                  <td style="background: #dfedf3 "> {{ managers[manager].details[i].positive  }} </td>
+                  <td style="background: #dfedf3 " align=center > {{ managers[manager].details[i].positive  }} </td>
 
                 {% endfor %}
 
@@ -109,12 +104,12 @@
         </tbody>
     </table>
 
-    <br><br>
+    <br>
 
-    <table class="t2" width="50%" align=left height="55%" border="0" cellpadding="0" cellspacing="0">
-      <thead rowspan="2">
-              <tr style="background: #dfedf3" height=40 align=center>
-              <th width="200" align=center >Менеджер</th>
+    <table class="table" align="center">
+      <thead rowspan="2" align="center" > <h5> <p class="text-primary">
+              <tr class="info" >
+              <th>Менеджер</th>
               <th>Входящих звонков</th>
               <th>Исходящих звонков</th>
               <th>Успешных</th>
@@ -128,7 +123,7 @@
         {% for manager in managers %}
 
           <tr>
-          <td style="background: #dfedf3">{{ managers[manager].caller_name }} </td>
+          <td><h5> <p class="text-primary">{{ managers[manager].caller_name }}</p> </h5>  </td>
           <td>{{ managers[manager].inbound_calls }}</td>
           <td>{{ managers[manager].outbound_calls }}</td>
           <td>{{ managers[manager].succesed_calls  }}</td>
@@ -143,7 +138,8 @@
 
 
     </table>  
-
+  </div>
+  <br><br>
   </body>
 </html>
 

@@ -10,7 +10,7 @@ import getData
 
 def index():
 
-    managers_num = ('205', '207', '223', '251', '300')
+    managers_num = ('205', '207', '223', '251', '300', '221', '227')
     work_hours = ('08','09','10','11','12','13','14','15','16','17','18','19','20')
 
     form = UserDate(request.form)
