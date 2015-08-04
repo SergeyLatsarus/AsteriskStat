@@ -50,7 +50,7 @@ def query(input_date_from, input_date_to):
     for eachRow in rows_src:
         if bool(re.search('^\d\d\d$', eachRow[1])):
             callers_name_map[eachRow[1]] = eachRow[0]
-            print callers_name_map
+
     for eachRow in rows:
 
         incoming_to_caller_name = (eachRow[2])[4:7] if bool(re.search('SIP/\d\d\d', eachRow[2])) else None
