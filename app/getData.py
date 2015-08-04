@@ -56,7 +56,7 @@ def query(input_date_from, input_date_to):
         incoming_to_caller_name = (eachRow[2])[4:7] if bool(re.search('SIP/\d\d\d', eachRow[2])) else None
         caller_name = eachRow[0]
         caller_id = eachRow[1]
-        bill_sec = eachRow[4]
+        bill_sec = 0 if eachRow[4] < 30 else eachRow[4]
         call_hour = datetime.strftime(eachRow[3], "%H")
         is_succeeded = bill_sec > 0
         is_incoming = bool(re.search('SIP/\d\d\d', eachRow[2]))
@@ -100,6 +100,7 @@ def query(input_date_from, input_date_to):
 
         else:
             if incoming_to_caller_name:
+                bill_sec = 0 if eachRow[4] < 40 else eachRow[4]
                 if incoming_to_caller_name in managers:
                     if is_succeeded:
                         managers[incoming_to_caller_name].succesed_calls += 1
