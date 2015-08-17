@@ -145,7 +145,57 @@
       </tbody>  
 
 
-    </table>  
+    </table>
+    <br>
+    <table class="table table_score">
+        <thead>
+            <tr class="info">
+                <th colspan="2" align=center  rowspan="2">Менеджер \ Часы </th>
+
+                    {% for i in all_hours %}
+                      <th colspan="2" rowspan="2" align=center >{{i}}:00</th>
+                    {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for dealer in dealingers %}
+
+            <tr align=center >
+              <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ dealingers[dealer].caller_name }} {{ dealingers[dealer].caller_id }}</p></h5></td>
+
+                {% for i in all_hours %}
+                  <td rowspan="2" align=center class="row v_align_center" id = "{{ dealingers[dealer].caller_id }}aRow{{i}}" > {{dealingers[dealer].details[i].duration}}</td>
+                  <script>
+                            if ({{ dealingers[dealer].details[i].duration }} == 0) {
+                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ffffff";
+                            } else if ({{ dealingers[dealer].details[i].duration }} < 10) {
+                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ff8800";
+                            } else if ({{ dealingers[dealer].details[i].duration }} < 15) {
+                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ffc800";
+                            } else if ({{ dealingers[dealer].details[i].duration }} < 25) {
+                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#c4ff00";
+                            } else if ({{ dealingers[dealer].details[i].duration }} < 35) {
+                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#00ff00";
+                            } else if ({{ dealingers[dealer].details[i].duration }} < 70) {
+                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#228B22";
+                            } else {
+                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#66CC33";
+                            }
+                  </script>
+                  <td style="background: #dfedf3 " align=center > {{ dealingers[dealer].details[i].positive  }} </td>
+                {% endfor %}
+
+            </tr>
+                 <tr style="background: #dfedf3">
+                    {% for i in all_hours %}
+                        <td align=center>{{ dealingers[dealer].details[i].negative  }}</td>
+                    {% endfor %}
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
   </div>
   <br><br>
   </body>
