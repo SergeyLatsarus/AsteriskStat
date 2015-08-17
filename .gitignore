@@ -6,3 +6,4 @@ bin
 pip-selfcheck.json
 .Python
 .xml
+*.pyc
