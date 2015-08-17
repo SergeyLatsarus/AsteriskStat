@@ -7,3 +7,4 @@ pip-selfcheck.json
 .Python
 .xml
 *.pyc
+.idea
