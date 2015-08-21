@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
 
       <title>Asterisk Stat</title>
+
       <meta charset="utf-8">
-      <title>jQuery UI Datepicker - Default functionality</title>
+
       <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
       <script src="//code.jquery.com/jquery-1.10.2.js"></script>
       <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-      <link rel="stylesheet" href="/resources/demos/style.css">
+
 
       <style>
           .table_score>tbody>tr>td, .table_score>tbody>tr>th, .table_score>tfoot>tr>td, .table_score>tfoot>tr>th, .table_score>thead>tr>td, .table_score>thead>tr>th {
@@ -25,176 +26,185 @@
             border: 1px solid #485159 !important;
           }
       </style>
+
       <script>
-      $(function() {
-        $( "#datepicker_from" ).datepicker();
-      });
-        $(function() {
-        $( "#datepicker_to" ).datepicker();
-      });
+          $(function() {
+            $( "#datepicker_from" ).datepicker();
+          });
+            $(function() {
+            $( "#datepicker_to" ).datepicker();
+          });
       </script>
-  </head>
 
-  <body>
-  <div class="container-fluid">
-      {% block content %}
-        <form action="" method="post" name="input_date_from">
-          {{form.hidden_tag()}}
-          <p>
-          <h4 class="text-primary">
-          Please select date from:
-          {{ form.input_date_from(size=10, id="datepicker_from")}} to:
-          {{ form.input_date_to(size=10, id="datepicker_to")}} <span style="margin-left:95%;">
-            </span>
-            <!--<a href="/config">Config</a></span>-->
-              <br>
-          </h4>
-          </p>
-        <p><input type="submit" class="btn btn-info" value="Get Report"></p>
-        </form>
-      {% endblock %}
+    </head>
 
-      <table class="table table_score">
-        <thead>
-            <tr class="info">
-              <th colspan="2" align=center  rowspan="2">Менеджер \ Часы </th>
+    <body>
+        <div class="container-fluid">
 
-            {% for i in work_hours %}
-              <th colspan="2" rowspan="2" align=center >{{i}}:00</th>
-            {% endfor %}
+            {% block content %}
 
-            </tr>
-        </thead>
-        <tbody>
+                <form action="" method="post" name="input_date_from">
 
-            {% for manager in managers %}
+                    {{form.hidden_tag()}}
 
-            <tr align=center >
-              <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ managers[manager].caller_name }} {{ managers[manager].caller_id }}</p></h5></td>
+                    <p>
+                        <h4 class="text-primary">
+                            Please select date from:
+                            {{ form.input_date_from(size=10, id="datepicker_from")}} to:
+                            {{ form.input_date_to(size=10, id="datepicker_to")}} <span style="margin-left:95%;">
+                              </span>
+                              <!--<a href="/config">Config</a></span>-->
+                                <br>
+                        </h4>
+                    </p>
+                    <p>
+                        <input type="submit" class="btn btn-info" value="Get Report">
+                    </p>
+                </form>
+
+            {% endblock %}
+
+          <table class="table table_score">
+              <thead>
+                <tr class="info">
+                  <th colspan="2" align=center  rowspan="2">Менеджер \ Часы </th>
 
                 {% for i in work_hours %}
-                  <td rowspan="2" align=center class="row v_align_center" id = "{{ managers[manager].caller_id }}aRow{{i}}" > {{managers[manager].details[i].duration}}</td>
-                  <script>
-                            if ({{ managers[manager].details[i].duration }} == 0) {
-                              document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#ffffff";
-                            } else if ({{ managers[manager].details[i].duration }} < 10) {
-                              document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#ff8800";
-                            } else if ({{ managers[manager].details[i].duration }} < 15) {
-                              document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#ffc800";
-                            } else if ({{ managers[manager].details[i].duration }} < 25) {
-                              document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#c4ff00";
-                            } else if ({{ managers[manager].details[i].duration }} < 35) {
-                              document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#00ff00";
-                            } else if ({{ managers[manager].details[i].duration }} < 70) {
-                              document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#228B22";
-                            } else {
-                              document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#66CC33";
-                            }
-                  </script>
-                  <td style="background: #dfedf3 " align=center > {{ managers[manager].details[i].positive  }} </td>
-
+                  <th colspan="2" rowspan="2" align=center >{{i}}:00</th>
                 {% endfor %}
 
+                </tr>
+            </thead>
+            <tbody>
 
-            </tr>
-                 <tr style="background: #dfedf3">
+                {% for manager in managers %}
+
+                <tr align=center >
+                  <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ managers[manager].caller_name }} {{ managers[manager].caller_id }}</p></h5></td>
 
                     {% for i in work_hours %}
-
-                  <td align=center>{{ managers[manager].details[i].negative  }}</td>
+                      <td rowspan="2" align=center class="row v_align_center" id = "{{ managers[manager].caller_id }}aRow{{i}}" > {{managers[manager].details[i].duration}}</td>
+                      <script>
+                                if ({{ managers[manager].details[i].duration }} == 0) {
+                                  document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#ffffff";
+                                } else if ({{ managers[manager].details[i].duration }} < 10) {
+                                  document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#ff8800";
+                                } else if ({{ managers[manager].details[i].duration }} < 15) {
+                                  document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#ffc800";
+                                } else if ({{ managers[manager].details[i].duration }} < 25) {
+                                  document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#c4ff00";
+                                } else if ({{ managers[manager].details[i].duration }} < 35) {
+                                  document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#00ff00";
+                                } else if ({{ managers[manager].details[i].duration }} < 70) {
+                                  document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#228B22";
+                                } else {
+                                  document.getElementById('{{ managers[manager].caller_id }}aRow{{i}}').style.background = "#66CC33";
+                                }
+                      </script>
+                      <td style="background: #dfedf3 " align=center > {{ managers[manager].details[i].positive  }} </td>
 
                     {% endfor %}
 
-            </tr>
 
-            {% endfor %}
+                </tr>
+                     <tr style="background: #dfedf3">
 
-        </tbody>
-    </table>
+                        {% for i in work_hours %}
 
-    <br>
+                      <td align=center>{{ managers[manager].details[i].negative  }}</td>
 
-    <table class="table table-hover table_score" align="center">
-      <thead rowspan="2" align="center" > <h5> <p class="text-primary">
-              <tr class="info" >
-              <th>Менеджер</th>
-              <th>Входящих звонков</th>
-              <th>Исходящих звонков</th>
-              <th>Успешных</th>
-              <th>Неуспешных</th>
-              <th>Всего Минут</th>  
-              <th>Средняя продолжительность звонка</th>
-              </tr>
-      </thead>
-      
-      <tbody align=center border=solid 1px #326e87>
-        {% for manager in managers %}
+                        {% endfor %}
 
-          <tr>
-          <td><h5> <p class="text-primary">{{ managers[manager].caller_name }}</p> </h5>  </td>
-          <td>{{ managers[manager].inbound_calls }}</td>
-          <td>{{ managers[manager].outbound_calls }}</td>
-          <td>{{ managers[manager].succesed_calls  }}</td>
-          <td>{{ managers[manager].unsuccesed_calls  }}</td>
-          <td>{{ managers[manager].total_calls_time  }}</td>
-          <td>{{ managers[manager].average_time}}</td>
-          </tr>      
+                </tr>
 
-
-        {% endfor %}
-      </tbody>  
-
-
-    </table>
-    <br>
-    <table class="table table_score">
-        <thead>
-            <tr class="info">
-                <th colspan="2" align=center  rowspan="2">Менеджер \ Часы </th>
-
-                    {% for i in all_hours %}
-                      <th colspan="2" rowspan="2" align=center >{{i}}:00</th>
-                    {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for dealer in dealingers %}
-
-            <tr align=center >
-              <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ dealingers[dealer].caller_name }} {{ dealingers[dealer].caller_id }}</p></h5></td>
-
-                {% for i in all_hours %}
-                  <td rowspan="2" align=center class="row v_align_center" id = "{{ dealingers[dealer].caller_id }}aRow{{i}}" > {{dealingers[dealer].details[i].duration}}</td>
-                  <script>
-                            if ({{ dealingers[dealer].details[i].duration }} == 0) {
-                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ffffff";
-                            } else if ({{ dealingers[dealer].details[i].duration }} < 10) {
-                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ff8800";
-                            } else if ({{ dealingers[dealer].details[i].duration }} < 15) {
-                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ffc800";
-                            } else if ({{ dealingers[dealer].details[i].duration }} < 25) {
-                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#c4ff00";
-                            } else if ({{ dealingers[dealer].details[i].duration }} < 35) {
-                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#00ff00";
-                            } else if ({{ dealingers[dealer].details[i].duration }} < 70) {
-                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#228B22";
-                            } else {
-                              document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#66CC33";
-                            }
-                  </script>
-                  <td style="background: #dfedf3 " align=center > {{ dealingers[dealer].details[i].positive  }} </td>
                 {% endfor %}
 
-            </tr>
-                 <tr style="background: #dfedf3">
-                    {% for i in all_hours %}
-                        <td align=center>{{ dealingers[dealer].details[i].negative  }}</td>
-                    {% endfor %}
-            </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <table class="table table-hover table_score" align="center">
+          <thead rowspan="2" align="center" > <h5> <p class="text-primary">
+                  <tr class="info" >
+                  <th>Менеджер</th>
+                  <th>Входящих звонков</th>
+                  <th>Исходящих звонков</th>
+                  <th>Успешных</th>
+                  <th>Неуспешных</th>
+                  <th>Всего Минут</th>
+                  <th>Средняя продолжительность звонка</th>
+                  </tr>
+          </thead>
+
+          <tbody align=center border=solid 1px #326e87>
+            {% for manager in managers %}
+
+              <tr>
+              <td><h5> <p class="text-primary">{{ managers[manager].caller_name }}</p> </h5>  </td>
+              <td>{{ managers[manager].inbound_calls }}</td>
+              <td>{{ managers[manager].outbound_calls }}</td>
+              <td>{{ managers[manager].succesed_calls  }}</td>
+              <td>{{ managers[manager].unsuccesed_calls  }}</td>
+              <td>{{ managers[manager].total_calls_time  }}</td>
+              <td>{{ managers[manager].average_time}}</td>
+              </tr>
+
 
             {% endfor %}
-        </tbody>
-    </table>
+          </tbody>
+
+
+        </table>
+        <br>
+        <table class="table table_score">
+            <thead>
+                <tr class="info">
+                    <th colspan="2" align=center  rowspan="2">Менеджер \ Часы </th>
+
+                        {% for i in all_hours %}
+                          <th colspan="2" rowspan="2" align=center >{{i}}:00</th>
+                        {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for dealer in dealingers %}
+
+                <tr align=center >
+                  <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ dealingers[dealer].caller_name }} {{ dealingers[dealer].caller_id }}</p></h5></td>
+
+                    {% for i in all_hours %}
+                      <td rowspan="2" align=center class="row v_align_center" id = "{{ dealingers[dealer].caller_id }}aRow{{i}}" > {{dealingers[dealer].details[i].duration}}</td>
+                      <script>
+                                if ({{ dealingers[dealer].details[i].duration }} == 0) {
+                                  document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ffffff";
+                                } else if ({{ dealingers[dealer].details[i].duration }} < 10) {
+                                  document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ff8800";
+                                } else if ({{ dealingers[dealer].details[i].duration }} < 15) {
+                                  document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#ffc800";
+                                } else if ({{ dealingers[dealer].details[i].duration }} < 25) {
+                                  document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#c4ff00";
+                                } else if ({{ dealingers[dealer].details[i].duration }} < 35) {
+                                  document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#00ff00";
+                                } else if ({{ dealingers[dealer].details[i].duration }} < 70) {
+                                  document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#228B22";
+                                } else {
+                                  document.getElementById('{{ dealingers[dealer].caller_id }}aRow{{i}}').style.background = "#66CC33";
+                                }
+                      </script>
+                      <td style="background: #dfedf3 " align=center > {{ dealingers[dealer].details[i].positive  }} </td>
+                    {% endfor %}
+
+                </tr>
+                     <tr style="background: #dfedf3">
+                        {% for i in all_hours %}
+                            <td align=center>{{ dealingers[dealer].details[i].negative  }}</td>
+                        {% endfor %}
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
 
   </div>
   <br><br>
