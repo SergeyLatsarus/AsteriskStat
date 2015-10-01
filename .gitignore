@@ -1,4 +1,3 @@
-*config.py
 tmp
 lib
 include
@@ -8,4 +7,3 @@ pip-selfcheck.json
 .xml
 *.pyc
 .idea
-.idea_2
