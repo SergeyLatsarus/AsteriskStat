@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 from flask import render_template, flash, redirect, request
 from app import app
 from getData import UserDate
