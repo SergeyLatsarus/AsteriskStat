@@ -80,7 +80,7 @@
                 {% for manager in managers %}
 
                 <tr align=center >
-                  <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ managers[manager].caller_name }} {{ managers[manager].caller_id }}</p></h5></td>
+                  <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ managers_names[manager] }} {{ managers[manager].caller_id }}</p></h5></td>
 
                     {% for i in work_hours %}
                       <td rowspan="2" align=center class="row v_align_center" id = "{{ managers[manager].caller_id }}aRow{{i}}" > {{managers[manager].details[i].duration}}</td>
@@ -141,7 +141,7 @@
             {% for manager in managers %}
 
               <tr>
-              <td><h5> <p class="text-primary">{{ managers[manager].caller_name }}</p> </h5>  </td>
+              <td><h5> <p class="text-primary">{{ managers_names[manager] }}</p> </h5>  </td>
               <td>{{ managers[manager].inbound_calls }}</td>
               <td>{{ managers[manager].outbound_calls }}</td>
               <td>{{ managers[manager].succesed_calls  }}</td>
