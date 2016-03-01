@@ -6,6 +6,8 @@ class Manager(object):
         self.caller_name = cnam
         self.inbound_calls = 0
         self.outbound_calls = 0
+        self.inbound_calls_time = 0
+        self.outbound_calls_time = 0
         self.succesed_calls = 0
         self.unsuccesed_calls = 0
         self.total_calls_time = 0

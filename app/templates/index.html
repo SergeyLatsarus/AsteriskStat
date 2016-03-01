@@ -204,6 +204,8 @@
                   <th>Исходящих звонков</th>
                   <th>Успешных</th>
                   <th>Неуспешных</th>
+                  <th>Входящих минут</th>
+                  <th>Исходящих минут</th>
                   <th>Всего Минут</th>
                   <th>Средняя продолжительность звонка</th>
                   </tr>
@@ -212,6 +214,8 @@
          total_out = 0;
          total_succes = 0;
          total_unsucces = 0;
+         total_in_min = 0;
+         total_out_min = 0;
          total_time = 0;
          total_avg = 0;
          sum = 0;
@@ -226,6 +230,8 @@
               <td>{{ managers[manager].outbound_calls }}</td>
               <td>{{ managers[manager].succesed_calls  }}</td>
               <td>{{ managers[manager].unsuccesed_calls  }}</td>
+              <td>{{ managers[manager].inbound_calls_time  }} </td>
+              <td>{{ managers[manager].outbound_calls_time  }} </td>
               <td>{{ managers[manager].total_calls_time  }}</td>
               <td>{{ managers[manager].average_time}}</td>
               </tr>
@@ -233,6 +239,8 @@
                     total_out += {{ managers[manager].outbound_calls }};
                     total_succes += {{ managers[manager].succesed_calls  }};
                     total_unsucces += {{ managers[manager].unsuccesed_calls  }};
+                    total_in_min +={{ managers[manager].inbound_calls_time }};
+                    total_out_min += {{ managers[manager].outbound_calls_time }};
                     total_time += {{ managers[manager].total_calls_time  }};
                     sum += {{ managers[manager].average_time}};
                     i++;
@@ -245,6 +253,8 @@
             <td id="total_out">  </td>
             <td id="total_succes">  </td>
             <td id="total_unsucces">  </td>
+            <td id="total_in_min"> </td>
+            <td id="total_out_min">  </td>
             <td id="total_time">  </td>
             <td id="total_avg">  </td>
           </tr>
@@ -313,6 +323,8 @@
             $("#total_out").text(total_out);
             $("#total_succes").text(total_succes);
             $("#total_unsucces").text(total_unsucces);
+            $("#total_in_min").text(total_in_min);
+            $("#total_out_min").text(total_out_min);
             $("#total_time").text(total_time);
             $("#total_avg").text(total_avg);
           });

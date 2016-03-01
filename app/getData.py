@@ -40,12 +40,12 @@ def query(input_date_from, input_date_to):
 
     if query_date_from != None and query_date_to != None:
             c.execute("SELECT  cnam, src, dstchannel, calldate, billsec \
-                    FROM asteriskcdrdb.cdr \
+                    FROM CDR.cdr \
                     WHERE calldate BETWEEN '%s' AND '%s' " % (query_date_from_b, query_date_to))
             rows = c.fetchall()
     else:
         c.execute("SELECT  cnam, src, dstchannel, calldate, billsec \
-                        FROM asteriskcdrdb.cdr \
+                        FROM CDR.cdr \
                         WHERE calldate like '%s' " % query_date_from)
         rows = c.fetchall()
 
@@ -72,6 +72,7 @@ def is_manager_exist(caller_id):
 def add_outgoing_details(caller_id, bill_sec, call_hour ):
     is_succesed(caller_id, bill_sec)
     managers[caller_id].outbound_calls += 1
+    managers[caller_id].outbound_calls_time += int(round(bill_sec / 60.0))
     managers[caller_id].total_calls_time += int(round(bill_sec / 60.0))
     managers[caller_id].store_call_out(call_hour, 1 if bill_sec > 60 else 0, 0 if bill_sec > 60 else 1, bill_sec)
     managers[caller_id].average_time  = managers[caller_id].avg_time()
@@ -80,6 +81,7 @@ def add_outgoing_details(caller_id, bill_sec, call_hour ):
 def add_incoming_details(caller_id, bill_sec, call_hour ):
     is_succesed(caller_id, bill_sec)
     managers[caller_id].inbound_calls += 1
+    managers[caller_id].inbound_calls_time += int(round(bill_sec / 60.0))
     managers[caller_id].total_calls_time += int(round(bill_sec / 60.0))
     managers[caller_id].store_call_in(call_hour, 1 if bill_sec > 60 else 0, 0 if bill_sec > 60 else 1, bill_sec)
     managers[caller_id].average_time  = managers[caller_id].avg_time()
