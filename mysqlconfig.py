@@ -1,6 +1,6 @@
 __author__ = 'akr0bat'
-mysql = {'host': '127.0.0.1',
-         'user': 'root',
-         'passwd': 'lagartos',
-         'db': 'CDR'}
+mysql = {'host': '',
+         'user': '',
+         'passwd': '',
+         'db': ''}
 use_anonymous = True
