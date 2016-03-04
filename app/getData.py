@@ -19,6 +19,26 @@ class UserDate(Form):
     input_date_from = DateField( 'input_date_from' ,validators = [Required()])
     input_date_to = DateField( 'input_date_to' ,validators = [Required()])
 
+def main(requsted_date_from, requsted_date_to):
+
+    managers.clear()
+    calls = query(requsted_date_from, requsted_date_to)
+    for call in calls:
+        call_hour = datetime.strftime(call[3], "%H")
+        direction = call[2]
+        is_incoming_call = bool(re.search('SIP/\d\d\d', direction))
+        bill_sec = 0 if call[4] < 60 else call[4]
+        caller_id = direction[4:7] if bool(re.search('SIP/\d\d\d', direction)) else call[1]
+
+        is_manager_exist(caller_id)
+
+        if is_incoming_call and managers.has_key(caller_id):
+            add_incoming_details(caller_id, bill_sec, call_hour)
+        elif managers.has_key( caller_id):
+            add_outgoing_details(caller_id, bill_sec, call_hour)
+
+    return managers
+
 
 def query(input_date_from, input_date_to):
 
@@ -40,22 +60,16 @@ def query(input_date_from, input_date_to):
 
     if query_date_from != None and query_date_to != None:
             c.execute("SELECT  cnam, src, dstchannel, calldate, billsec \
-                    FROM asteriskcdrdb.cdr \
+                    FROM CDR.cdr \
                     WHERE calldate BETWEEN '%s' AND '%s' " % (query_date_from_b, query_date_to))
             rows = c.fetchall()
     else:
         c.execute("SELECT  cnam, src, dstchannel, calldate, billsec \
-                        FROM asteriskcdrdb.cdr \
+                        FROM CDR.cdr \
                         WHERE calldate like '%s' " % query_date_from)
         rows = c.fetchall()
 
     return rows
-
-
-def is_incoming_call(destination):
-    is_incoming = bool(re.search('SIP/\d\d\d', destination))
-    return is_incoming
-
 
 def is_succesed(caller_id, bill_sec):
     if bill_sec > 60:
@@ -87,26 +101,7 @@ def add_incoming_details(caller_id, bill_sec, call_hour ):
     managers[caller_id].average_time  = managers[caller_id].avg_time()
 
 
-def main(requsted_date_from, requsted_date_to):
 
-    managers.clear()
-    calls = query(requsted_date_from, requsted_date_to)
-    for call in calls:
-        call_hour = datetime.strftime(call[3], "%H")
-        caller_id = call[1]
-        destination = call[2]
-        bill_sec = 0 if call[4] < 30 else call[4]
-        incoming_to_caller_id = (call[2])[4:7] if bool(re.search('SIP/\d\d\d', call[2])) else None
-
-        is_manager_exist(caller_id)
-        is_manager_exist(incoming_to_caller_id)
-
-        if is_incoming_call(destination) and managers.has_key(incoming_to_caller_id):
-            add_incoming_details(incoming_to_caller_id, bill_sec, call_hour)
-        elif managers.has_key( caller_id):
-            add_outgoing_details(caller_id, bill_sec, call_hour)
-
-    return managers
 
 
 
