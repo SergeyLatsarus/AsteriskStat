@@ -38,7 +38,31 @@
     </head>
 
     <body>
+        <div class="container-fluid" >
+            <div hidden>
+            {% block content %}
 
+                <form action="" method="post" name="input_date_from">
+
+                    {{form.hidden_tag()}}
+
+                    <p>
+                        <h4 class="text-primary">
+                            Please select date from:
+                            {{ form.input_date_from(size=10, id="datepicker_from")}} to:
+                            {{ form.input_date_to(size=10, id="datepicker_to")}} <span style="margin-left:95%;">
+                              </span>
+                              <!--<a href="/config">Config</a></span>-->
+                                <br>
+                        </h4>
+                    </p>
+                    <p>
+                        <input type="submit" class="btn btn-info" value="Get Report">
+                    </p>
+                </form>
+
+            {% endblock %}
+            </div>
 <h4>outgoing</h4>
 
           <table class="table table_score">
@@ -230,54 +254,6 @@
 
         </table>
         <br>
-        <table class="table table_score">
-            <thead>
-                <tr class="info">
-                    <th colspan="2" align=center  rowspan="2">Менеджер \ Часы </th>
-
-                        {% for i in all_hours %}
-                          <th colspan="2" rowspan="2" align=center >{{i}}:00</th>
-                        {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for dealer in dealingers %}
-
-                <tr align=center >
-                  <td colspan="2" rowspan="2" align=center  style="background: #dfedf3" ><h5><p class="text-primary">{{ managers[dealer].caller_name }} {{ managers[dealer].caller_id }}</p></h5></td>
-
-                    {% for i in all_hours %}
-                      <td rowspan="2" align=center class="row v_align_center" id = "{{ managers[dealer].caller_id }}cRow{{i}}" > {{managers[dealer].detailsIn[i].duration}}</td>
-                      <script>
-                                if ({{ managers[dealer].detailsIn[i].duration }} == 0) {
-                                  document.getElementById('{{ managers[dealer].caller_id }}cRow{{i}}').style.background = "#ffffff";
-                                } else if ({{ managers[dealer].detailsIn[i].duration }} < 10) {
-                                  document.getElementById('{{ managers[dealer].caller_id }}cRow{{i}}').style.background = "#ff8800";
-                                } else if ({{ managers[dealer].detailsIn[i].duration }} < 15) {
-                                  document.getElementById('{{ managers[dealer].caller_id }}cRow{{i}}').style.background = "#ffc800";
-                                } else if ({{ managers[dealer].detailsIn[i].duration }} < 25) {
-                                  document.getElementById('{{ managers[dealer].caller_id }}cRow{{i}}').style.background = "#c4ff00";
-                                } else if ({{ managers[dealer].detailsIn[i].duration }} < 35) {
-                                  document.getElementById('{{ managers[dealer].caller_id }}cRow{{i}}').style.background = "#00ff00";
-                                } else if ({{ managers[dealer].detailsIn[i].duration }} < 70) {
-                                  document.getElementById('{{ managers[dealer].caller_id }}cRow{{i}}').style.background = "#228B22";
-                                } else {
-                                  document.getElementById('{{ managers[dealer].caller_id }}cRow{{i}}').style.background = "#66CC33";
-                                }
-                      </script>
-                      <td style="background: #dfedf3 " align=center > {{ managers[dealer].detailsIn[i].positive  }} </td>
-                    {% endfor %}
-
-                </tr>
-                     <tr style="background: #dfedf3">
-                        {% for i in all_hours %}
-                            <td align=center>{{ managers[dealer].detailsIn[i].negative  }}</td>
-                        {% endfor %}
-                </tr>
-
-                {% endfor %}
-            </tbody>
-        </table>
 
   </div>
   <br><br>
