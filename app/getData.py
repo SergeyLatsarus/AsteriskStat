@@ -60,12 +60,12 @@ def query(input_date_from, input_date_to):
 
     if query_date_from != None and query_date_to != None:
             c.execute("SELECT  cnam, src, dstchannel, calldate, billsec \
-                    FROM CDR.cdr \
+                    FROM asteriskcdrdb.cdr \
                     WHERE calldate BETWEEN '%s' AND '%s' " % (query_date_from_b, query_date_to))
             rows = c.fetchall()
     else:
         c.execute("SELECT  cnam, src, dstchannel, calldate, billsec \
-                        FROM CDR.cdr \
+                        FROM asteriskcdrdb.cdr \
                         WHERE calldate like '%s' " % query_date_from)
         rows = c.fetchall()
 
