@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Salesforce Dashboard</title>
+</head>
+
+<body>
+
+<p>DA DASHBOARD<p>
+<table width="100%" height="100%">
+    <tr>
+        <td width="33%"><div id="container_1" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div></td>
+        <td width="33%"><div id="container_2" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div></td>
+        <td width="33%"><div id="container_3" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div></td>
+    </tr>
+
+    <tr>
+        <td width="33%"><div id="container_4" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div></td>
+        <td width="33%"><div id="container_5" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div></td>
+        <td width="33%"><div id="container_6" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div></td>
+    </tr>
+
+</table>
+<script>
+
+  var names1 = [];
+  var values1 = [];
+
+   {% for user_name in funding_user_names %}
+            names1.push('{{  user_name  }}');
+            values1.push({{ funding_by_users[user_name] }});
+   {% endfor %}
+
+  var names2 = [];
+  var values2 = [];
+
+   {% for user_name in withdrawal_user_names %}
+            names2.push('{{  user_name  }}');
+            values2.push({{ withdrawal_by_users[user_name] }});
+   {% endfor %}
+
+  var names3 = [];
+  var values3 = [];
+
+   {% for user_name in converted_leads_user_names %}
+            names3.push('{{  user_name  }}');
+            values3.push({{ converted_leads_by_users[user_name] }});
+   {% endfor %}
+
+  var names4 = [];
+  var values4 = [];
+
+   {% for user_name in sum_of_incentive_user_names %}
+            names4.push('{{  user_name  }}');
+            values4.push({{ sum_of_incentive_deposites_by_users[user_name] }});
+   {% endfor %}
+
+</script>
+
+</body>
+
+<script>
+  window.onload = function() {
+    draw_chart(names1, values1, 'container_1', 'Все пополнения за текущий месяц')
+    draw_chart(names2, values2, 'container_2', 'Все снятия за текущий месяц')
+    draw_chart(names3, values3, 'container_3', 'Конвертированные от 100$')
+    draw_chart(names4, values4, 'container_4', 'Первичные пополнения за текущий месяц')
+  }
+
+  function draw_chart(names, values, container_id, title){
+    $('#' + container_id).highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: title
+        },
+        xAxis: {
+            categories: names,
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            labels: {
+                enabled: false
+            }
+        },
+        tooltip: {
+            valueSuffix: ' millions',
+            enabled: false
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 80,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            showInLegend: false,
+            data: values
+        }]
+    });
+  }
+
+</script>
+
+<script>
+    setTimeout(function(){
+  window.location.href = './';;
+}, 30000);
+</script>
+
+</html>

@@ -7,6 +7,7 @@ from flask import render_template, request
 from app import app
 from getData import UserDate
 import getData
+import salesforce_dashboard
 from config import managers_num, managers_names, dealingers_num, work_hours, all_hours
 
 
@@ -49,3 +50,26 @@ def index():
 def config():
 
     return render_template("config.html")
+
+@app.route('/dashboard')
+def dashboard():
+
+    funding_by_users,\
+    funding_user_names,\
+    withdrawal_by_users,\
+    withdrawal_user_names,\
+    converted_leads_by_users,\
+    converted_leads_user_names,\
+    sum_of_incentive_deposites_by_users,\
+    sum_of_incentive_user_names = salesforce_dashboard.main()
+
+    return render_template("dashboard.html",
+                           funding_by_users = funding_by_users,
+                           funding_user_names = funding_user_names,
+                           withdrawal_by_users = withdrawal_by_users,
+                           withdrawal_user_names = withdrawal_user_names,
+                           converted_leads_by_users = converted_leads_by_users,
+                           converted_leads_user_names = converted_leads_user_names,
+                           sum_of_incentive_deposites_by_users = sum_of_incentive_deposites_by_users,
+                           sum_of_incentive_user_names = sum_of_incentive_user_names)
+
