@@ -91,7 +91,12 @@ def dashboard():
     converted_leads_by_users,\
     converted_leads_user_names,\
     sum_of_incentive_deposites_by_users,\
-    sum_of_incentive_user_names = salesforce_dashboard.main()
+    sum_of_incentive_user_names,\
+    outbount_calls_to_accounts_by_users,\
+    outbount_calls_to_accounts_user_names, \
+    outbount_calls_to_leads_by_users,\
+    outbount_calls_to_leads_user_names \
+    = salesforce_dashboard.main()
 
     return render_template("dashboard.html",
                            funding_by_users = funding_by_users,
@@ -101,5 +106,9 @@ def dashboard():
                            converted_leads_by_users = converted_leads_by_users,
                            converted_leads_user_names = converted_leads_user_names,
                            sum_of_incentive_deposites_by_users = sum_of_incentive_deposites_by_users,
-                           sum_of_incentive_user_names = sum_of_incentive_user_names)
+                           sum_of_incentive_user_names = sum_of_incentive_user_names,
+                           outbount_calls_to_accounts_by_users = outbount_calls_to_accounts_by_users,
+                           outbount_calls_to_accounts_user_names = outbount_calls_to_accounts_user_names,
+                           outbount_calls_to_leads_by_users = outbount_calls_to_leads_by_users,
+                           outbount_calls_to_leads_user_names = outbount_calls_to_leads_user_names)
 

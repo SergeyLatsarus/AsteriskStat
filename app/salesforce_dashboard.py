@@ -38,10 +38,30 @@ def main():
                                                  WHERE First_Funding_Date__c = THIS_MONTH AND Account__r.ownerid in %s GROUP BY ROLLUP(Account__r.ownerid)"
 
 
+    outbount_calls_to_accounts_by_users_query = "SELECT OwnerId, Count(Id)From Task WHERE \
+     (Who.Type in ('Account', 'Contact') OR What.Type in ('Account', 'Contact')) \
+     AND type = 'Outbound Call'  \
+     AND result__c in ('1 Talked - Substantial', '2 Talked - Brief', '3 Talked - Callback Requested', '4 Reached Associate') \
+     AND status = 'Завершено' \
+     AND ActivityDate = THIS_MONTH \
+     GROUP BY ROLLUP(OwnerId)"
+
+    outbount_calls_to_leads_by_users_query = "SELECT OwnerId, Count(Id)From Task WHERE \
+     (Who.Type in ('Lead') OR What.Type in ('Lead')) \
+     AND type = 'Outbound Call'  \
+     AND result__c in ('1 Talked - Substantial', '2 Talked - Brief', '3 Talked - Callback Requested', '4 Reached Associate') \
+     AND status = 'Завершено' \
+     AND ActivityDate = THIS_MONTH \
+     GROUP BY ROLLUP(OwnerId)"
+
     funding_by_users, funding_user_names = Dashboard(active_users, funding_by_users_query).get_salesforce_data()
     withdrawal_by_users, withdrawal_user_names = Dashboard(active_users, withdrawal_by_users_query).get_salesforce_data()
     converted_leads_by_users, converted_leads_user_names = Dashboard(active_users, converted_leads_by_users_query).get_salesforce_data()
     sum_of_incentive_deposites_by_users,  sum_of_incentive_user_names = Dashboard(active_users, sum_of_incentive_deposites_by_users_query).get_salesforce_data()
+    outbount_calls_to_accounts_by_users, outbount_calls_to_accounts_user_names = Dashboard(active_users, outbount_calls_to_accounts_by_users_query).get_salesforce_data()
+    outbount_calls_to_leads_by_users, outbount_calls_to_leads_user_names = Dashboard(active_users, outbount_calls_to_leads_by_users_query).get_salesforce_data()
 
     return funding_by_users, funding_user_names, withdrawal_by_users, withdrawal_user_names, \
-           converted_leads_by_users, converted_leads_user_names, sum_of_incentive_deposites_by_users,  sum_of_incentive_user_names
+           converted_leads_by_users, converted_leads_user_names, sum_of_incentive_deposites_by_users,  sum_of_incentive_user_names, \
+           outbount_calls_to_accounts_by_users, outbount_calls_to_accounts_user_names, \
+           outbount_calls_to_leads_by_users, outbount_calls_to_leads_user_names

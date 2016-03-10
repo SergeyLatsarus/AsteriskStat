@@ -65,6 +65,23 @@
             values4.push({{ sum_of_incentive_deposites_by_users[user_name] }});
    {% endfor %}
 
+  var names5 = [];
+  var values5 = [];
+
+   {% for user_name in outbount_calls_to_accounts_user_names %}
+            names5.push('{{  user_name  }}');
+            values5.push({{ outbount_calls_to_accounts_by_users[user_name] }});
+   {% endfor %}
+
+  var names6 = [];
+  var values6 = [];
+
+   {% for user_name in outbount_calls_to_leads_user_names %}
+            names5.push('{{  user_name  }}');
+            values5.push({{ outbount_calls_to_leads_by_users[user_name] }});
+   {% endfor %}
+
+
 </script>
 
 </body>
@@ -75,6 +92,8 @@
     draw_chart(names2, values2, 'container_2', 'Все снятия за текущий месяц')
     draw_chart(names3, values3, 'container_3', 'Конвертированные от 100$')
     draw_chart(names4, values4, 'container_4', 'Первичные пополнения за текущий месяц')
+    draw_chart(names5, values5, 'container_5', 'Положительные звонки клиентам за текущий месяц')
+    draw_chart(names6, values6, 'container_6', 'Положительные звонки лидам за текущий месяц')
   }
 
   function draw_chart(names, values, container_id, title){
