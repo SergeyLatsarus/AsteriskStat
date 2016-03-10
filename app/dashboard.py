@@ -24,6 +24,7 @@ class Dashboard(object):
         users = users['records']
         user_names = {}
         sales_names = []
+        print query_results
 
         for user in users:
             user_names[user['Id']] =user['Name']

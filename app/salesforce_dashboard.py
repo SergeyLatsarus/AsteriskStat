@@ -44,6 +44,7 @@ def main():
      AND result__c in ('1 Talked - Substantial', '2 Talked - Brief', '3 Talked - Callback Requested', '4 Reached Associate') \
      AND status = 'Завершено' \
      AND ActivityDate = THIS_MONTH \
+     AND OwnerId in %s \
      GROUP BY ROLLUP(OwnerId)"
 
     outbount_calls_to_leads_by_users_query = "SELECT OwnerId, Count(Id)From Task WHERE \
@@ -52,6 +53,7 @@ def main():
      AND result__c in ('1 Talked - Substantial', '2 Talked - Brief', '3 Talked - Callback Requested', '4 Reached Associate') \
      AND status = 'Завершено' \
      AND ActivityDate = THIS_MONTH \
+     AND OwnerId in %s \
      GROUP BY ROLLUP(OwnerId)"
 
     funding_by_users, funding_user_names = Dashboard(active_users, funding_by_users_query).get_salesforce_data()
