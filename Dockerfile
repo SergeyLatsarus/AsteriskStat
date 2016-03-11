@@ -26,10 +26,6 @@ RUN git clone https://github.com/SergeyLatsarus/AsteriskStat.git
 
 RUN touch /AsteriskStat/config.py /AsteriskStat/mysqlconfig.py
 
-RUN echo -e "__author__ = 'akr0bat'\nCSRF_ENABLED = True\nSECRET_KEY = 'you-will-never-guess'" >> /AsteriskStat/config.py
-
-RUN echo -e "__author__ = 'akr0bat'\nmysql = {'host': '192.168.88.191',\n'user': 'asteriskstat',\n'passwd': 'lagartos12#',\n'db': 'asteriskcdrdb'}\nuse_anonymous = True" >> /AsteriskStat/mysqlconfig.py
-
 # Get pip to download and install requirements:
 RUN pip install -r /AsteriskStat/requirements.txt
 
