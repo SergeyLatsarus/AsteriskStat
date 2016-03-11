@@ -24,7 +24,9 @@ RUN apt-get install -y python python-dev python-distribute python-pip libmysqlcl
 # Copy the application folder inside the container
 RUN git clone https://github.com/SergeyLatsarus/AsteriskStat.git
 
-RUN touch /AsteriskStat/config.py /AsteriskStat/mysqlconfig.py
+COPY ./config.py /AsteriskStat/config.py
+COPY ./mysqlconfig.py /AsteriskStat/mysqlconfig.py
+COPY ./salesforce_config.py /AsteriskStat/salesforce_config.py
 
 # Get pip to download and install requirements:
 RUN pip install -r /AsteriskStat/requirements.txt
