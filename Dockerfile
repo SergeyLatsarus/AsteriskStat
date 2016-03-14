@@ -22,6 +22,7 @@ RUN apt-get install -y tar git curl vim wget dialog net-tools build-essential
 RUN apt-get install -y python python-dev python-distribute python-pip libmysqlclient-dev
 
 RUN pip install MySQL-python
+RUN pip install simple_salesforce
 
 # Copy the application folder inside the container
 RUN git clone https://github.com/SergeyLatsarus/AsteriskStat.git
